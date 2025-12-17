@@ -1,0 +1,16 @@
+---
+title: "Preparing for your Posit Team Install"
+author:
+  name: Lisa Anders heavily inspired by resources and conversations in the Solutions Engineering team, especially SamC, Katie, MichaelM, and Monanshi 
+  email: lisa.anders@posit.co
+date: "2025-12-11"
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    toc: true
+editor: source
+---
+
+
