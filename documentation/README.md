@@ -2,7 +2,7 @@
 
 **Author**: Lisa Anders heavily inspired by resources and conversations in the Solutions Engineering team, especially SamC, Katie, MichaelM, Monanshi, and the West Study Group
 
-**Target audience**: An admin that you know will be a good admin, they have fearlessness and independence but maybe they don't know what they are doing yet. The goal being to help the you'll-be-a-good-admin-we-just-have-to-get-through-this-one-new-thing folks that are rising to the challenge. Also for hard conversations with leadership when you are trying to get a different admin, because they aren't able to follow these clear pre reqs. And honestly maybe this is selfish - when a customer is struggling because they are new to nfs or postgres management (or whif atever it is) and are looking to me for guidance I want (1) something I can refer to that will enable tus both and (2) something we can point at and say "you aren't able to do this fundamental set up steps, maybe we should reconsider". 
+**Target audience**: An admin attempting to do an install. The below should be a good judge of capability while still providing guidance on preparing the infrastructure. 
 
 # Preparing for your Posit Team Install
 
@@ -81,6 +81,15 @@ umask
 umask 020
 ```
 
+If cgroups is enabled (for example, typically on by default with Rhel9) then make sure that the Workbench cgroups integration is configured. 
+
+### Networking 
+
+> How do we check that networking  looks good? 
+
+For multi node deployments make sure that all nodes can access each toher:
+
+
 Networking ports can also be a common challenge if certain ports are blocked. Review the [cheatsheet of Networking](https://docs.posit.co/getting-started/networking.html) to make sure all needed ports have been opened. Note that these ports are needed internally inside your network, outbound is not required (but can make things a lot easier). The recommendation for very closed off installations would be to open up the firewall temporarily so that files can be downloaded for install more easily instead of needing to download on a separate device and then upload them. 
 
 ```bash
@@ -98,7 +107,7 @@ ufw disable # Ubuntu
 sudo setcap 'cap_net_bind_service=+ep' /opt/rstudio-pm/bin/rstudio-pm
 ```
 
-> How do we check that networking  looks good? 
+
 
 ### Storage 
 
@@ -249,6 +258,10 @@ Posit has support for oauth integrations to data sources. This makes it so that 
 
 - Posit Workbench and Managed Credentials: <https://docs.posit.co/ide/server-pro/user/posit-workbench/managed-credentials/managed-credentials.html>
 - Posit Connect and Oauth Integrations: <https://docs.posit.co/connect/user/oauth-integrations/>
+
+### Email server
+
+Have the details for you email server handy for Connect for sending emails as a SMTP connection. 
 
 ### Authentication and authorization
 
