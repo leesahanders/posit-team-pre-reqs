@@ -48,6 +48,80 @@ You will also need to edit your `~/.claude/settings.json` (if the file does not 
 {
   "awsAuthRefresh": "aws sso login",
   "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "ANTHROPIC_MODEL": "us.anthropic.claude-opus-4-6-v1",
+    "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "AWS_PROFILE": "claude",
+    "AWS_REGION": "us-east-1"
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.posit.co)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
+```
+
+Here is a more intensive example: 
+
+```bash
+{
+  "awsAuthRefresh": "aws sso login",
+  "env": {
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "ANTHROPIC_MODEL": "us.anthropic.claude-opus-4-6-v1",
+    "ANTHROPIC_SMALL_FAST_MODEL": "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "MAX_THINKING_TOKENS": "1024",
+    "AWS_PROFILE": "claude",
+    "AWS_REGION": "us-east-1"
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.posit.co)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
+  "enabledPlugins": {
+    "beads@beads-marketplace": false,
+    "atlassian@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true,
+    "green-impact@posit-plugins": true,
+    "eks-bump@local-plugins": true
+  },
+  "alwaysThinkingEnabled": true,
+  "autoUpdatesChannel": "latest",
+}
+"mcpServers": {
+    "kapa": {
+      "type": "http",
+      "url": "https://pub.current.posit.team/public/kapa-mcp/mcp",
+      "headers": {
+        "Authorization": "Key YOUR-API-KEY-HERE"
+      }
+    },
+    "obsidian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-obsidian",
+        "/mnt/c/Users/samco/Dropbox/github/notes/ObsidianNotes/Work Notes"
+      ]
+    }
+  }
+```
+
+In cases where a browser is not available (like headless or server-only environments) then use the awsCredentialExport property instead. This only works after aws sso login is successful, and invokes the export-credentials command to read the current profile’s credentials. EG `"awsCredentialExport": "aws configure export-credentials", ` instead of `"awsAuthRefresh": "aws sso login",`
+
+Old versioon: 
+
+```bash
+{
+  "awsAuthRefresh": "aws sso login",
+  "env": {
     "CLAUDE_CODE_USE_BEDROCK": 1,
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "4096",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "us.anthropic.claude-opus-4-1-20250805-v1:0",
@@ -63,7 +137,30 @@ You will also need to edit your `~/.claude/settings.json` (if the file does not 
 }
 ```
 
+Good [internal reference](https://positpbc.slack.com/archives/C04280LRVQT/p1771865960761269)
+
+Good [external reference](https://github.com/trailofbits/claude-code-config)
+
 In cases where a browser is not available (like headless or server-only environments) then use the awsCredentialExport property instead. This only works after aws sso login is successful, and invokes the export-credentials command to read the current profile’s credentials. EG `"awsCredentialExport": "aws configure export-credentials", ` instead of `"awsAuthRefresh": "aws sso login",`
+
+## Add any MCP servers 
+
+MCP servers can be hosted anywhere. In our case they are hosted on Connect. 
+
+Here are the two inside Posit that are useful: 
+
+- <https://connect.posit.it/connect/#/apps/ab4b582a-a272-4d89-bd0d-616a7d8cc2bc/content-view>
+- <https://pub.current.posit.team/connect/#/apps/fc44fc56-72b3-4348-8321-47c341edb3b1/content-view>
+
+```bash
+# This adds it to your profile 
+claude mcp add zendesk "https://my-url/mcp" \
+    --transport http \
+    --header "Authorization: Key redacted"
+
+# This will add it to your overall user profile
+claude mcp add <whatever> "http:blahblahblah" --scope user 
+```
 
 ## Log in to AWS
 
@@ -86,3 +183,5 @@ claude --permission-mode plan
 ## Inspiration
 
 This is cool (Sam E's): <https://github.com/posit-dev/posit-claude-internal-support-tool>
+
+
