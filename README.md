@@ -116,7 +116,7 @@ Here is a more intensive example:
 
 In cases where a browser is not available (like headless or server-only environments) then use the awsCredentialExport property instead. This only works after aws sso login is successful, and invokes the export-credentials command to read the current profile’s credentials. EG `"awsCredentialExport": "aws configure export-credentials", ` instead of `"awsAuthRefresh": "aws sso login",`
 
-Old versioon: 
+Old version: 
 
 ```bash
 {
@@ -184,4 +184,5 @@ claude --permission-mode plan
 
 This is cool (Sam E's): <https://github.com/posit-dev/posit-claude-internal-support-tool>
 
+Also reference this issue: <https://positpbc.atlassian.net/browse/OPM-20> 
 
